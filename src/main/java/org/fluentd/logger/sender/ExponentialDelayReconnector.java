@@ -8,7 +8,7 @@ import java.util.LinkedList;
  */
 public class ExponentialDelayReconnector implements Reconnector {
 
-    private double waitMillis = 50; // Start wait is 50ms
+    private double waitMillis = 500; // Start wait is 500ms
 
     private double waitIncrRate = 1.5;
 
