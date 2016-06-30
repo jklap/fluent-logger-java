@@ -165,6 +165,10 @@ public class RawSocketSender implements Sender {
                 LOG.error("Cannot send logs to " + server.toString());
                 return false;
             }
+            if (bytes.length > pendings.remaining()) {
+                LOG.error("Log data {} larger than remaining buffer size {}", bytes.length, pendings.remaining());
+                return false;
+            }
         }
         pendings.put(bytes);
 
