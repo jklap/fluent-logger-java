@@ -152,6 +152,8 @@ public class RawSocketSender implements Sender {
             flush();
             if (pendings.position() == 0) {
                 return true;
+            } else {
+                LOG.error("Cannot send logs to " + server.toString());
             }
         }
 
@@ -162,7 +164,10 @@ public class RawSocketSender implements Sender {
         // buffering
         if (pendings.position() + bytes.length > pendings.capacity()) {
             if (!flushBuffer()) {
-                LOG.error("Cannot send logs to " + server.toString());
+                return false;
+            }
+            if (bytes.length > pendings.remaining()) {
+                LOG.error("Log data {} larger than remaining buffer size {}", bytes.length, pendings.remaining());
                 return false;
             }
         }
